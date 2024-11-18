@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToe</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Tic Tac Toe</h1>
+        <div id="players">
+            <p id="p1">Player X: <span id="p1-name">Player 1</span></p>
+            <p id="p2">Player O: <span id="p2-name">Player 2</span></p>
+        </div>
+    </header>
+
+    <div id="board">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+
+    <!-- Modal for result -->
+    <div id="modalOverlay"></div>
+    <div id="resultModal">
+        <p id="resultText"></p>
+        <button onclick="restartGame()">Restart Game</button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
