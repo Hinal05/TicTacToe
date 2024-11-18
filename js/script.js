@@ -21,31 +21,22 @@ const winningCombinations = [
     [2, 4, 6]
 ];
 
-function checkWinner() {
-    const squares = Array.from(document.getElementsByClassName('square'));
+const checkWinner = (squares) =>
+    winningCombinations.find(([a, b, c]) =>
+        squares[a].textContent &&
+        squares[a].textContent === squares[b].textContent &&
+        squares[a].textContent === squares[c].textContent
+    )?.[0] ?? null;
 
-    for (const combination of winningCombinations) {
-        const [a, b, c] = combination;
-        if (
-            squares[a].textContent &&
-            squares[a].textContent === squares[b].textContent &&
-            squares[a].textContent === squares[c].textContent
-        ) {
-            return squares[a].textContent; // Return the winner ('X' or 'O')
-        }
-    }
-
-    return null;
-}
-
-function showResult(message) {
+const showResult = (message) => {
     resultText.textContent = message;
     resultModal.style.display = 'block';
     modalOverlay.style.display = 'block';
-}
+};
 
-function handleClick(event) {
+const handleClick = (event) => {
     const square = event.target;
+    const squares = Array.from(document.getElementsByClassName('square'));
 
     // Mark the square
     if (!square.classList.contains('taken')) {
@@ -54,9 +45,9 @@ function handleClick(event) {
         moves++;
 
         // Check for a winner
-        const winner = checkWinner();
+        const winner = checkWinner(squares);
         if (winner) {
-            showResult(`${playerNames[winner]} wins! 🎉`);
+            showResult(`${playerNames[squares[winner].textContent]} wins! 🎉`);
             disableBoard();
             return;
         }
@@ -71,25 +62,26 @@ function handleClick(event) {
         // Switch player
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     }
-}
+};
 
-function disableBoard() {
+const disableBoard = () => {
     Array.from(document.getElementsByClassName('square')).forEach(square => {
         square.classList.add('taken');
     });
-}
+};
 
-function restartGame() {
-    // Reset the game state
-    Array.from(document.getElementsByClassName('square')).forEach(square => {
+const restartGame = () => {
+    const resetSquare = (square) => {
         square.textContent = '';
         square.classList.remove('taken');
-    });
+    };
+
+    Array.from(document.getElementsByClassName('square')).forEach(resetSquare);
     currentPlayer = 'X';
     moves = 0;
     resultModal.style.display = 'none';
     modalOverlay.style.display = 'none';
-}
+};
 
 // Add event listeners to all squares
 Array.from(document.getElementsByClassName('square')).forEach(square => {
